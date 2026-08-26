@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -7,16 +7,24 @@
   <title>WanderLaust</title>
 </head>
 <!-- show all list of places -->
+
 <body>
   <h1>Show All Lists</h1>
 
+  <form method="get" action="/listing/new">
+    <button>Add New Place</button>
+  </form>
+
   <% for(let list of listsAll){ %>
-    <div><a href="/listing/<%= list._id %>"><%= list.title %></a>
+    <div><a href="/listing/<%= list._id %>">
+        <%= list.title %>
+      </a>
     </div>
     <div>description:-
       <%= list.description %>
     </div>
-    <br><br><hr>
+    <br><br>
+    <hr>
     <% } %>
 </body>
 

@@ -30,10 +30,40 @@ app.get("/", (req, res) => {
   res.send("Hello World this is my project.");
 });
 
+app.post("/listing", async (req, res) => {
+  let { title, description, img, country, price, phone, location } = req.body;
+
+  let newlist = await new Listing({
+    title: title,
+    image: {url: img},
+    description: description,
+    country: country,
+    price: price,
+    phone: phone,
+    location: location
+  });
+
+  await newlist
+    .save()
+    .then(() => {
+      console.log("listing created suceesfully and save in database");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  console.log("post is working");
+
+  res.redirect("/listing");
+});
+
 //starting point and display all listings on this route
 app.get("/listing", async (req, res) => {
   let listsAll = await Listing.find({});
   res.render("./listings/index.ejs", { listsAll });
+});
+
+app.get("/listing/new", (req, res) => {
+  res.render("listings/new.ejs");
 });
 
 //show id wise listing using this route
@@ -41,10 +71,8 @@ app.get("/listing/:id", async (req, res) => {
   let { id } = req.params;
 
   let onelist = await Listing.findById(id);
-  res.render("./listings/show.ejs", { onelist });
+  res.render("listings/show.ejs", { onelist });
 });
-
-app.get("")
 
 //server running on port 8000
 app.listen(8000, () => {
