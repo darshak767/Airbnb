@@ -14,14 +14,24 @@
 
 <body>
   <h1>Add New Place</h1>
-  <form method="post" action="/listing">
+  <form method="post" action="/listings">
+    <label for="title">Title</label>
     <input type="text" placeholder="enter title here.." name="title"> <br><br>
+
+    <label for="description">Description</label>
     <textarea name="description" placeholder="enter description"></textarea> <br><br>
+
+    <label for="image">Image</label>
     <input type="text" placeholder="enter image here.." name="img"> <br><br>
+
+    <label for="country">Country</label>
     <input type="text" placeholder="enter country name here.." name="country"> <br><br>
-    <input type="number" placeholder="enter country price here.." name="price"><br><br>
+
+    <label for="price">Price</label>
+    <input type="number" placeholder="enter price here.." name="price"><br><br>
+
+    <label for="location">Location</label>
     <input type="text" placeholder="enter location here.." name="location"><br><br>
-    <input type="number" placeholder="enter number here.." name="phone"><br><br>
     <button type="submit">Add</button>
   </form>
 </body>

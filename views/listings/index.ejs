@@ -11,18 +11,21 @@
 <body>
   <h1>Show All Lists</h1>
 
-  <form method="get" action="/listing/new">
+  <form method="get" action="/listings/new">
     <button>Add New Place</button>
   </form>
 
   <% for(let list of listsAll){ %>
-    <div><a href="/listing/<%= list._id %>">
+    <div><a href="/listings/<%= list._id %>">
         <%= list.title %>
       </a>
     </div>
     <div>description:-
       <%= list.description %>
     </div>
+    <form method="get" action="/listings/<%= list._id %>/edit">
+      <button>Edit listing</button>
+    </form>
     <br><br>
     <hr>
     <% } %>
