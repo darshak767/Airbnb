@@ -1,0 +1,216 @@
+/* ===== NAVBAR ===== */
+
+.navbar {
+  height: 5rem;
+  background-color: white;
+}
+
+.fa-compass {
+  color: red;
+  font-size: 2rem;
+}
+
+.nav-link {
+  color: #222 !important;
+}
+
+/* ===== FOOTER ===== */
+
+footer {
+  margin-top: 2rem;
+}
+
+.f-info {
+  min-height: 8rem;
+  background-color: #ebebeb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.f-info-socials {
+  font-size: 1.5rem;
+}
+
+.f-info-socials i {
+  margin: 0 0.75rem;
+  color: #222;
+  transition: 0.2s;
+}
+
+.f-info-socials i:hover {
+  color: #ff385c;
+}
+
+.f-info-links a {
+  text-decoration: none;
+  color: #222;
+  margin: 0 0.5rem;
+  font-size: 0.9rem;
+}
+
+.f-info-links a:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  .f-info {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+}
+
+/* ===== LISTINGS ===== */
+
+.listings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.listings-header h1 {
+  margin: 0;
+  font-weight: 600;
+}
+
+.listings-header p {
+  margin: 0.3rem 0 0;
+  color: #777;
+}
+
+.add-place-btn {
+  border-radius: 0.6rem;
+  padding: 0.6rem 1rem;
+}
+
+/* ===== CARDS ===== */
+
+.listing-card {
+  border: none;
+  border-radius: 1rem;
+  overflow: hidden;
+  height: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  transition: 0.25s;
+}
+
+.listing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.listing-card img {
+  height: 220px;
+  object-fit: cover;
+}
+
+.listing-card .card-body {
+  padding: 1.2rem;
+}
+
+.listing-card .card-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.listing-card .card-text {
+  color: #666;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 48px;
+}
+
+.listing-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.listing-price {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.listing-card .btn {
+  border-radius: 0.5rem;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 576px) {
+  .listings-header {
+    align-items: flex-start;
+    gap: 1rem;
+    flex-direction: column;
+  }
+
+  .add-place-btn {
+    width: 100%;
+  }
+}
+
+/* ===== FORM ===== */
+
+.listing-form {
+  max-width: 700px;
+  margin: 2rem auto;
+}
+
+.listing-form h1 {
+  font-weight: 600;
+}
+
+.listing-form .form-control {
+  border-radius: 0.5rem;
+}
+
+.listing-form .btn {
+  border-radius: 0.5rem;
+  padding: 0.6rem 1.5rem;
+}
+
+/* ===== EDIT IMAGE ===== */
+
+.edit-image img {
+  width: 100%;
+  max-width: 500px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.edit-image {
+  text-align: center;
+}
+
+/* ===== SHOW LISTING ===== */
+
+.show-card {
+  max-width: 700px;
+  margin: auto;
+}
+
+.show-image {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.show-details {
+  padding: 1.5rem 0;
+}
+
+.show-details h2 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.show-details p {
+  color: #555;
+  margin-bottom: 0.6rem;
+}

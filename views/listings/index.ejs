@@ -1,34 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout('layouts/boilerplate') -%>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WanderLaust</title>
-</head>
-<!-- show all list of places -->
+<div class="listings-header">
+  <div>
+    <h1>Explore Places</h1>
+    <p>Find your next destination</p>
+  </div>
 
-<body>
-  <h1>Show All Lists</h1>
+  <a href="/listings/new" class="btn btn-dark add-place-btn">
+    <i class="fa-solid fa-plus"></i> Add New Place
+  </a>
+</div>
 
-  <form method="get" action="/listings/new">
-    <button>Add New Place</button>
-  </form>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
   <% for(let list of listsAll){ %>
-    <div><a href="/listings/<%= list._id %>">
-        <%= list.title %>
-      </a>
-    </div>
-    <div>description:-
-      <%= list.description %>
-    </div>
-    <form method="get" action="/listings/<%= list._id %>/edit">
-      <button>Edit listing</button>
-    </form>
-    <br><br>
-    <hr>
-    <% } %>
-</body>
 
-</html>
+    <div class="col">
+      <div class="card listing-card">
+
+        <img
+          src="<%= list.image.url %>"
+          class="card-img-top"
+          alt="<%= list.title %>"
+        >
+
+        <div class="card-body">
+
+          <h5 class="card-title">
+            <%= list.title %>
+          </h5>
+
+          <p class="card-text">
+            <%= list.description %>
+          </p>
+
+          <div class="listing-footer">
+            <span class="listing-price">
+              ₹<%= list.price.toLocaleString('en-IN') %>
+            </span>
+
+            <a
+              href="/listings/<%= list._id %>"
+              class="btn btn-outline-dark"
+            >
+              View Details
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  <% } %>
+
+</div>

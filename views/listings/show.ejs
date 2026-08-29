@@ -1,34 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout('layouts/boilerplate') -%>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>
-    <%= onelist.title %> Details
-  </title>
-</head>
-<!-- show only one list details -->
-<body>
-  <h1>Listing Details</h1>
-  <div>
-    <img src="<%= onelist.image.url %>" height="300px">
-    <p>TItle :
-      <%= onelist.title%>
-    </p>
-    <p>Description :
-      <%= onelist.description%>
-    </p>
-    <p>price :&#8377;
-      <%= onelist.price.toLocaleString('en-IN') %>
-    </p>
-    <p>location :
-      <%= onelist.location%>
-    </p>
-    <p>country :
-      <%= onelist.country%>
-    </p>
+<div class="listing-form">
+
+  <h1 class="mb-4">Listing Details</h1>
+
+  <div class="show-card">
+
+    <img
+      src="<%= onelist.image.url %>"
+      class="show-image"
+      alt="<%= onelist.title %>"
+    >
+
+    <div class="show-details">
+
+      <h2><%= onelist.title %></h2>
+
+      <p><strong>Description:</strong> <%= onelist.description %></p>
+
+      <p>
+        <strong>Price:</strong>
+        ₹<%= onelist.price.toLocaleString('en-IN') %>
+      </p>
+
+      <p><strong>Location:</strong> <%= onelist.location %></p>
+
+      <p><strong>Country:</strong> <%= onelist.country %></p>
+
+      <div class="mt-4 d-flex gap-2">
+
+        <form method="get" action="/listings/<%= onelist._id %>/edit">
+          <button type="submit" class="btn btn-dark">
+            Edit Listing
+          </button>
+        </form>
+
+        <form
+          method="post"
+          action="/listings/<%= onelist._id %>?_method=DELETE"
+        >
+          <button type="submit" class="btn btn-outline-danger">
+            Delete Listing
+          </button>
+        </form>
+
+      </div>
+
+    </div>
+
   </div>
-</body>
 
-</html>
+</div>

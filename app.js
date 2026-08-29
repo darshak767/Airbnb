@@ -5,12 +5,15 @@ const Listing = require("./models/listing");
 require("dotenv").config();
 const path = require("path");
 const methodOverride = require("method-override");
+const ejsMate = require("ejs-mate");
 
 //MiddleWares
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.engine('ejs', ejsMate);
+app.use(express.static(path.join(__dirname, "/public")));
 
 //create Main Functions for database connection
 async function main() {
@@ -93,6 +96,14 @@ app.put("/listings/:id", async (req, res) => {
     returnDocument: "after",
     runValidators: true,
   });
+  res.redirect("/listings");
+});
+
+//Delete Route
+app.delete("/listings/:id", async (req, res) => {
+  let { id } = req.params;
+  let deletedlisting = await Listing.findByIdAndDelete(id);
+  // console.log(deletedlisting);
   res.redirect("/listings");
 });
 
