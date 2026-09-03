@@ -1,80 +1,68 @@
 <% layout('layouts/boilerplate') -%>
 
-<div class="listing-form">
+  <div class="listing-form">
 
-  <h1 class="mb-4">Edit <%= onelist.title %></h1>
+    <h1 class="mb-4">Edit <%= onelist.title %>
+    </h1>
 
-  <form method="post" action="/listings/<%= onelist._id %>?_method=PUT">
+    <form method="post" class="needs-validation" action="/listings/<%= onelist._id %>?_method=PUT" novalidate>
 
-    <div class="edit-image mb-4">
-      <img
-        src="<%= onelist.image.url %>"
-        alt="<%= onelist.title %>"
-      >
-    </div>
-
-    <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        value="<%= onelist.title %>"
-        name="Listing[title]"
-      >
-    </div>
-
-    <div class="mb-3">
-      <label for="description" class="form-label">Description</label>
-      <textarea
-        class="form-control"
-        id="description"
-        name="Listing[description]"
-        rows="4"
-      ><%= onelist.description %></textarea>
-    </div>
-
-    <div class="row">
-
-      <div class="col-md-6 mb-3">
-        <label for="country" class="form-label">Country</label>
-        <input
-          type="text"
-          class="form-control"
-          id="country"
-          value="<%= onelist.country %>"
-          name="Listing[country]"
-        >
+      <div class="edit-image mb-4">
+        <img src="<%= onelist.image.url %>" alt="<%= onelist.title %>">
       </div>
 
-      <div class="col-md-6 mb-3">
-        <label for="price" class="form-label">Price</label>
-        <input
-          type="number"
-          class="form-control"
-          id="price"
-          value="<%= onelist.price %>"
-          name="Listing[price]"
-        >
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" value="<%= onelist.title %>" name="Listing[title]" required>
+        <div class="invalid-feedback">
+          Please enter a valid title.
+        </div>
       </div>
 
-    </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="Listing[description]" rows="4"
+          required><%= onelist.description %></textarea>
+        <div class="invalid-feedback">
+          Please enter a valid description.
+        </div>
+      </div>
 
-    <div class="mb-4">
-      <label for="location" class="form-label">Location</label>
-      <input
-        type="text"
-        class="form-control"
-        id="location"
-        value="<%= onelist.location %>"
-        name="Listing[location]"
-      >
-    </div>
+      <div class="row">
 
-    <button type="submit" class="btn btn-dark">
-      Update <%= onelist.title %>
-    </button>
+        <div class="col-md-6 mb-3">
+          <label for="country" class="form-label">Country</label>
+          <input type="text" class="form-control" id="country" value="<%= onelist.country %>" name="Listing[country]"
+            required>
+          <div class="invalid-feedback">
+            Please enter a valid country name.
+          </div>
+        </div>
 
-  </form>
+        <div class="col-md-6 mb-3">
+          <label for="price" class="form-label">Price</label>
+          <input type="number" class="form-control" id="price" value="<%= onelist.price %>" name="Listing[price]"
+            required>
+          <div class="invalid-feedback">
+            Please enter a valid price.
+          </div>
+        </div>
 
-</div>
+      </div>
+
+      <div class="mb-4">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" class="form-control" id="location" value="<%= onelist.location %>" name="Listing[location]"
+          required>
+          <div class="invalid-feedback">
+          Please enter a valid location.
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-dark">
+        Edit <%= onelist.title %>
+      </button>
+
+    </form>
+
+  </div>

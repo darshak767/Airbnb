@@ -7,7 +7,6 @@ require("dotenv").config({ path: "../.env" });
 //connect database 
 async function main() {
     console.log("Mongo URL:", process.env.mongo_URL);
-
     await mongoose.connect(process.env.mongo_URL);
     console.log("Database Connected successfully.");
 }
@@ -16,7 +15,6 @@ async function main() {
 const initDB = async () => {
     await Listing.deleteMany({});
     await Listing.insertMany(initData.data);
-
     console.log("Data was initialized.");
 };
 

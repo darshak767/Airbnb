@@ -15,16 +15,25 @@ const listingSchema = new Schema({
     },
     url: {
       type: String,
-      default:
-        "https://wallpapers.com/images/thumbnail/relaxing-old-lion-sya5mbipxyiouzzw.jpg",
+      default: "/img/albert.jpg",
     },
   },
-  price: Number,
-  location: String,
-  country: String,
+  price: {
+    type: Number,
+    required: true,
+    min: [0, "Price cannot be negative"],
+  },
+  location: {
+    type: String,
+    required: true,
+  },
+  country: {
+    type: String,
+    required: true,
+  },
 });
 
-//create model(tabel) and give schema(header row) 
-const listing = mongoose.model("Listing", listingSchema); //listing is table name
+//create model(tabel) and give schema(header row)
+const Listing = mongoose.model("Listing", listingSchema); //listing is table name
 
-module.exports = listing;
+module.exports = Listing;

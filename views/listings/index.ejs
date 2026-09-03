@@ -1,57 +1,50 @@
 <% layout('layouts/boilerplate') -%>
 
-<div class="listings-header">
-  <div>
-    <h1>Explore Places</h1>
-    <p>Find your next destination</p>
+  <div class="listings-header">
+    <div>
+      <h1>Explore Places</h1>
+      <p>Find your next destination</p>
+    </div>
+
+    <a href="/listings/new" class="btn btn-dark add-place-btn">
+      <i class="fa-solid fa-plus"></i> Add New Place
+    </a>
   </div>
 
-  <a href="/listings/new" class="btn btn-dark add-place-btn">
-    <i class="fa-solid fa-plus"></i> Add New Place
-  </a>
-</div>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <% for(let list of listsAll){ %>
 
-  <% for(let list of listsAll){ %>
+      <div class="col">
+        <div class="card listing-card">
 
-    <div class="col">
-      <div class="card listing-card">
+          <img src="<%= list.image.url %>" class="card-img-top" alt="<%= list.title %>">
 
-        <img
-          src="<%= list.image.url %>"
-          class="card-img-top"
-          alt="<%= list.title %>"
-        >
+          <div class="card-body">
 
-        <div class="card-body">
+            <h5 class="card-title">
+              <%= list.title %>
+            </h5>
 
-          <h5 class="card-title">
-            <%= list.title %>
-          </h5>
+            <p class="card-text">
+              <%= list.description %>
+            </p>
 
-          <p class="card-text">
-            <%= list.description %>
-          </p>
+            <div class="listing-footer">
+              <span class="listing-price">
+                ₹<%= list.price ? list.price.toLocaleString('en-IN') : 'N/A' %>
+              </span>
 
-          <div class="listing-footer">
-            <span class="listing-price">
-              ₹<%= list.price.toLocaleString('en-IN') %>
-            </span>
+              <a href="/listings/<%= list._id %>" class="btn btn-outline-dark">
+                View Details
+              </a>
+            </div>
 
-            <a
-              href="/listings/<%= list._id %>"
-              class="btn btn-outline-dark"
-            >
-              View Details
-            </a>
           </div>
 
         </div>
-
       </div>
-    </div>
 
-  <% } %>
+      <% } %>
 
-</div>
+  </div>
