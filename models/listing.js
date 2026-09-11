@@ -31,6 +31,10 @@ const listingSchema = new Schema({
     type: String,
     required: true,
   },
+  reviews: [{
+    type: Schema.Types.ObjectId,
+    ref: "Review"
+  }], //array of reviewSchema
 });
 
 //create model(tabel) and give schema(header row)

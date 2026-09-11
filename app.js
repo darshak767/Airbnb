@@ -9,6 +9,7 @@ const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { listingSchema } = require("./schema.js");
+const Review = require("./models/review.js");
 
 //MiddleWares
 app.set("view engine", "ejs");
@@ -129,6 +130,19 @@ app.delete(
     res.redirect("/listings");
   }),
 );
+
+app.post("/listings/:id/reviews", wrapAsync(async (req, res) => {
+  let listing = await Listing.findById(req.params.id);
+
+  let newReview = new Review(req.body.review);
+
+  await newReview.save();
+  listing.reviews.push(newReview);
+  await listing.save();
+
+  console.log("Review added successfully");
+  res.redirect(`/listings/${listing._id}`);
+}));
 
 app.get("/privacy", (req, res) => {
   res.send("Privacy policy");

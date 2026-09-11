@@ -50,4 +50,18 @@
 
   </div>
 
+  <div>
+    <h4>leave review</h4>
+    <form action="/listings/<%= onelist._id %>/reviews" method="POST">
+      <div class="mb-3">
+        <label for="review-rating" class="form-label">Review</label>
+        <input type="range" min="1" max="5" name="review[rating]" id="review-rating" class="form-range">
+        
+        <label for="review-comment" class="form-label">Comment</label>
+        <textarea name="review[comment]" id="review-comment" class="form-control"></textarea>
+      </div>
+      <button type="submit" class="btn btn-dark mt-2">Submit</button>
+    </form>
+  </div>
+
 </div>
