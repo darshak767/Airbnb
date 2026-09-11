@@ -130,6 +130,18 @@ app.delete(
   }),
 );
 
+app.get("/privacy", (req, res) => {
+  res.send("Privacy policy");
+});
+
+app.get("/terms", (req, res) => {
+  res.send("Terms and conditions");
+});
+
+app.get("/favicon.ico", (req, res) => {
+  res.status(204).end();
+});
+
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page not found"));
 });
