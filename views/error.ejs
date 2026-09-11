@@ -1,0 +1,10 @@
+<% console.log("error.ejs rendering"); %>
+
+<% layout('layouts/boilerplate') -%> 
+ 
+<div class="row"> 
+  <div class="alert alert-warning" role="alert"> 
+    <%= err.message %> 
+    <%= err.statusCode %> 
+  </div> 
+</div>
