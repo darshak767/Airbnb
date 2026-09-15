@@ -214,3 +214,32 @@ footer {
   color: #555;
   margin-bottom: 0.6rem;
 }
+
+.listing-actions form {
+  flex: 1 1 0;
+}
+
+.listing-actions .btn {
+  width: 100%;
+}
+
+.reviews-section {
+  max-width: 700px;
+  margin: 2rem auto;
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 576px) {
+  .listing-actions {
+    flex-direction: column;
+  }
+
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+}

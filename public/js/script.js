@@ -17,3 +17,13 @@
     }, false)
   })
 })()
+
+const ratingInput = document.querySelector('#review-rating')
+const ratingValue = document.querySelector('#review-rating-value')
+
+if (ratingInput && ratingValue) {
+  ratingInput.addEventListener('input', () => {
+    ratingValue.value = ratingInput.value
+    ratingValue.textContent = ratingInput.value
+  })
+}

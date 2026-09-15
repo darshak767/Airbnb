@@ -8,7 +8,7 @@
 
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title" placeholder="Enter title here..." name="title" required>
+        <input type="text" class="form-control" id="title" placeholder="Enter title here..." name="Listing[title]" required>
         <div class="valid-feedback">
           Looks good!
         </div>
@@ -19,7 +19,7 @@
 
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" placeholder="Enter description..." name="description" rows="4"
+        <textarea class="form-control" id="description" placeholder="Enter description..." name="Listing[description]" rows="4"
           required></textarea>
         <div class="invalid-feedback">
           Please provide a valid description.
@@ -28,7 +28,7 @@
 
       <div class="mb-3">
         <label for="image" class="form-label">Image</label>
-        <input type="text" class="form-control" id="image" placeholder="Enter image URL..." name="image">
+        <input type="text" class="form-control" id="image" placeholder="Enter image URL..." name="Listing[image]">
         <div class="invalid-feedback">
           Please enter a valid image URL.
         </div>
@@ -38,7 +38,7 @@
 
         <div class="col-md-6 mb-3">
           <label for="country" class="form-label">Country</label>
-          <input type="text" class="form-control" id="country" placeholder="Enter country name..." name="country"
+          <input type="text" class="form-control" id="country" placeholder="Enter country name..." name="Listing[country]"
             required>
           <div class="invalid-feedback">
             Please provide a valid country name.
@@ -47,7 +47,7 @@
 
         <div class="col-md-6 mb-3">
           <label for="price" class="form-label">Price</label>
-          <input type="number" class="form-control" id="price" placeholder="Enter price..." name="price" required>
+          <input type="number" class="form-control" id="price" placeholder="Enter price..." name="Listing[price]" required>
           <div class="invalid-feedback">
             Price should be a positive number.
           </div>
@@ -56,7 +56,7 @@
 
       <div class="mb-4">
         <label for="location" class="form-label">Location</label>
-        <input type="text" class="form-control" id="location" placeholder="Enter location..." name="location" required>
+        <input type="text" class="form-control" id="location" placeholder="Enter location..." name="Listing[location]" required>
         <div class="invalid-feedback">
           Please provide a valid location.
         </div>
