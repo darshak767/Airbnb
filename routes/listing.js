@@ -54,6 +54,7 @@ router.post(
     await newList.save();
 
     console.log("Listing created successfully and saved in database.");
+    req.flash("success", "Listing created successfully!");
 
     res.redirect("/listings");
   }),
@@ -88,13 +89,14 @@ router.get("/new", (req, res) => {
 // ===============================
 router.get(
   "/:id",
-  wrapAsync(async (req, res, next) => {
+  wrapAsync(async (req, res) => {
     const { id } = req.params;
 
     const onelist = await Listing.findById(id).populate("reviews");
 
     if (!onelist) {
-      return next(new ExpressError(404, "Listing not found"));
+      req.flash("error", "Listing not found");
+      return res.redirect("/listings");
     }
 
     res.render("listings/show.ejs", {
@@ -109,13 +111,14 @@ router.get(
 // ===============================
 router.get(
   "/:id/edit",
-  wrapAsync(async (req, res, next) => {
+  wrapAsync(async (req, res) => {
     const { id } = req.params;
 
     const onelist = await Listing.findById(id);
 
     if (!onelist) {
-      return next(new ExpressError(404, "Listing not found"));
+      req.flash("error", "Listing not found");
+      return res.redirect("/listings");
     }
 
     res.render("listings/edit.ejs", {
@@ -131,7 +134,7 @@ router.get(
 router.put(
   "/:id",
   validateListing,
-  wrapAsync(async (req, res, next) => {
+  wrapAsync(async (req, res) => {
     const { id } = req.params;
 
     const updatedData = req.body.Listing;
@@ -146,8 +149,10 @@ router.put(
     );
 
     if (!updatedListing) {
-      return next(new ExpressError(404, "Listing not found"));
+      req.flash("error", "Listing not found");
+      return res.redirect("/listings");
     }
+    req.flash("success", "Listing updated successfully!");
 
     res.redirect("/listings");
   }),
@@ -159,14 +164,16 @@ router.put(
 // ===============================
 router.delete(
   "/:id",
-  wrapAsync(async (req, res, next) => {
+  wrapAsync(async (req, res) => {
     const { id } = req.params;
 
     const deletedListing = await Listing.findByIdAndDelete(id);
 
     if (!deletedListing) {
-      return next(new ExpressError(404, "Listing not found"));
+      req.flash("error", "Listing not found");
+      return res.redirect("/listings");
     }
+    req.flash("success", "Listing deleted successfully!");
 
     res.redirect("/listings");
   }),
