@@ -29,22 +29,13 @@ router.post(
   wrapAsync(async (req, res) => {
     const listingData = req.body.Listing;
 
-    const {
-      title,
-      description,
-      image,
-      country,
-      price,
-      location,
-    } = listingData;
+    const { title, description, image, country, price, location } = listingData;
 
     const newList = new Listing({
       title,
       description,
       image: {
-          url: image && image.trim() !== ""
-          ? image
-          : "/img/albert.jpg",
+        url: image && image.trim() !== "" ? image : "/img/albert.jpg",
       },
       country,
       price,
@@ -139,14 +130,10 @@ router.put(
 
     const updatedData = req.body.Listing;
 
-    const updatedListing = await Listing.findByIdAndUpdate(
-      id,
-      updatedData,
-      {
-        new: true,
-        runValidators: true,
-      },
-    );
+    const updatedListing = await Listing.findByIdAndUpdate(id, updatedData, {
+      new: true,
+      runValidators: true,
+    });
 
     if (!updatedListing) {
       req.flash("error", "Listing not found");
