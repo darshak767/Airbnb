@@ -6,6 +6,10 @@ const Listing = require("../models/listing.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { listingSchema } = require("../schema.js");
 
+const { isLoggedIn, isowner } = require("../middleware.js");
+
+const { index, renderNewForm, showListing, creatListing,  renderEditForm, updateListing, deleteListing} = require("../controllers/listings.js");
+
 // ===============================
 // Validation Middleware
 // ===============================
@@ -25,30 +29,9 @@ const validateListing = (req, res, next) => {
 // ===============================
 router.post(
   "/",
+  isLoggedIn,
   validateListing,
-  wrapAsync(async (req, res) => {
-    const listingData = req.body.Listing;
-
-    const { title, description, image, country, price, location } = listingData;
-
-    const newList = new Listing({
-      title,
-      description,
-      image: {
-        url: image && image.trim() !== "" ? image : "/img/albert.jpg",
-      },
-      country,
-      price,
-      location,
-    });
-
-    await newList.save();
-
-    console.log("Listing created successfully and saved in database.");
-    req.flash("success", "Listing created successfully!");
-
-    res.redirect("/listings");
-  }),
+  wrapAsync(creatListing)
 );
 
 // ===============================
@@ -57,22 +40,14 @@ router.post(
 // ===============================
 router.get(
   "/",
-  wrapAsync(async (req, res) => {
-    const listsAll = await Listing.find({});
-
-    res.render("listings/index.ejs", {
-      listsAll,
-    });
-  }),
+  wrapAsync(index)
 );
 
 // ===============================
 // NEW LISTING FORM
 // GET /listings/new
 // ===============================
-router.get("/new", (req, res) => {
-  res.render("listings/new.ejs");
-});
+router.get("/new", isLoggedIn, renderNewForm);
 
 // ===============================
 // SHOW LISTING
@@ -80,20 +55,8 @@ router.get("/new", (req, res) => {
 // ===============================
 router.get(
   "/:id",
-  wrapAsync(async (req, res) => {
-    const { id } = req.params;
-
-    const onelist = await Listing.findById(id).populate("reviews");
-
-    if (!onelist) {
-      req.flash("error", "Listing not found");
-      return res.redirect("/listings");
-    }
-
-    res.render("listings/show.ejs", {
-      onelist,
-    });
-  }),
+  isLoggedIn,
+  wrapAsync(showListing)
 );
 
 // ===============================
@@ -102,20 +65,8 @@ router.get(
 // ===============================
 router.get(
   "/:id/edit",
-  wrapAsync(async (req, res) => {
-    const { id } = req.params;
-
-    const onelist = await Listing.findById(id);
-
-    if (!onelist) {
-      req.flash("error", "Listing not found");
-      return res.redirect("/listings");
-    }
-
-    res.render("listings/edit.ejs", {
-      onelist,
-    });
-  }),
+  isLoggedIn,
+  wrapAsync(renderEditForm)
 );
 
 // ===============================
@@ -124,25 +75,10 @@ router.get(
 // ===============================
 router.put(
   "/:id",
+  isLoggedIn,
+  isowner,
   validateListing,
-  wrapAsync(async (req, res) => {
-    const { id } = req.params;
-
-    const updatedData = req.body.Listing;
-
-    const updatedListing = await Listing.findByIdAndUpdate(id, updatedData, {
-      new: true,
-      runValidators: true,
-    });
-
-    if (!updatedListing) {
-      req.flash("error", "Listing not found");
-      return res.redirect("/listings");
-    }
-    req.flash("success", "Listing updated successfully!");
-
-    res.redirect("/listings");
-  }),
+  wrapAsync(updateListing),
 );
 
 // ===============================
@@ -151,19 +87,8 @@ router.put(
 // ===============================
 router.delete(
   "/:id",
-  wrapAsync(async (req, res) => {
-    const { id } = req.params;
-
-    const deletedListing = await Listing.findByIdAndDelete(id);
-
-    if (!deletedListing) {
-      req.flash("error", "Listing not found");
-      return res.redirect("/listings");
-    }
-    req.flash("success", "Listing deleted successfully!");
-
-    res.redirect("/listings");
-  }),
+  isLoggedIn,
+  wrapAsync(deleteListing),
 );
 
 module.exports = router;

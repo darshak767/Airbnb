@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md bg-body-tertiary border-bottom sticky-top">
+<nav class="navbar navbar-expand-md bg-body-tertiary border-bottom  sticky-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,6 +20,14 @@
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+      <div class="navbar-nav">
+        <% if(!currentUser) { %>
+          <a href="/signup" class="nav-link">Sign Up</a>
+          <a href="/login" class="nav-link">Login</a>
+        <% } else { %>
+          <a href="/logout" class="nav-link">Logout</a>
+        <% } %>
+      </div>
     </div>
   </div>
 </nav>

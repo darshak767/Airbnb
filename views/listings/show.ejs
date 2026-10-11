@@ -13,6 +13,9 @@
         <h2>
           <%= onelist.title %>
         </h2>
+        <p><strong>Owner:</strong>
+          <%= onelist.owner.username %>
+        </p>
 
         <p><strong>Description:</strong>
           <%= onelist.description %>
@@ -30,23 +33,22 @@
         <p><strong>Country:</strong>
           <%= onelist.country %>
         </p>
+        <% if(currentUser && currentUser._id.equals(onelist.owner._id)){ %>
+          <div class="listing-actions mt-4 d-flex gap-2">
 
-        <div class="listing-actions mt-4 d-flex gap-2">
+            <form method="get" action="/listings/<%= onelist._id %>/edit">
+              <button type="submit" class="btn btn-dark">
+                Edit Listing
+              </button>
+            </form>
 
-          <form method="get" action="/listings/<%= onelist._id %>/edit">
-            <button type="submit" class="btn btn-dark">
-              Edit Listing
-            </button>
-          </form>
-
-          <form method="post" action="/listings/<%= onelist._id %>?_method=DELETE">
-            <button type="submit" class="btn btn-outline-danger">
-              Delete Listing
-            </button>
-          </form>
-
-        </div>
-
+            <form method="post" action="/listings/<%= onelist._id %>?_method=DELETE">
+              <button type="submit" class="btn btn-outline-danger">
+                Delete Listing
+              </button>
+            </form>
+          </div>
+          <% } %>
       </div>
 
     </div>
