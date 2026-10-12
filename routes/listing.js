@@ -2,17 +2,14 @@ const express = require("express");
 const router = express.Router();
 
 const wrapAsync = require("../utils/wrapAsync.js");
-const Listing = require("../models/listing.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { listingSchema } = require("../schema.js");
 
 const { isLoggedIn, isowner } = require("../middleware.js");
 
-const { index, renderNewForm, showListing, creatListing,  renderEditForm, updateListing, deleteListing} = require("../controllers/listings.js");
+const listingController = require("../controllers/listings.js");
 
-// ===============================
 // Validation Middleware
-// ===============================
 const validateListing = (req, res, next) => {
   const { error } = listingSchema.validate(req.body.Listing);
 
@@ -23,72 +20,38 @@ const validateListing = (req, res, next) => {
   next();
 };
 
-// ===============================
-// CREATE LISTING
-// POST /listings
-// ===============================
-router.post(
-  "/",
-  isLoggedIn,
-  validateListing,
-  wrapAsync(creatListing)
-);
+router.route("/")
+  .get(
+    wrapAsync(listingController.index)
+  )
+  .post(
+    isLoggedIn,
+    validateListing,
+    wrapAsync(listingController.createListing)
+  );
 
-// ===============================
-// INDEX
-// GET /listings
-// ===============================
-router.get(
-  "/",
-  wrapAsync(index)
-);
 
-// ===============================
-// NEW LISTING FORM
-// GET /listings/new
-// ===============================
-router.get("/new", isLoggedIn, renderNewForm);
+router.get("/new", isLoggedIn, listingController.renderNewForm);
 
-// ===============================
-// SHOW LISTING
-// GET /listings/:id
-// ===============================
-router.get(
-  "/:id",
-  isLoggedIn,
-  wrapAsync(showListing)
-);
+router.route("/:id")
+  .get(
+    wrapAsync(listingController.showListing)
+  )
+  .put(
+    isLoggedIn,
+    isowner,
+    validateListing,
+    wrapAsync(listingController.updateListing),
+  )
+  .delete(
+    isLoggedIn,
+    wrapAsync(listingController.deleteListing),
+  );
 
-// ===============================
-// EDIT FORM
-// GET /listings/:id/edit
-// ===============================
 router.get(
   "/:id/edit",
   isLoggedIn,
-  wrapAsync(renderEditForm)
-);
-
-// ===============================
-// UPDATE LISTING
-// PUT /listings/:id
-// ===============================
-router.put(
-  "/:id",
-  isLoggedIn,
-  isowner,
-  validateListing,
-  wrapAsync(updateListing),
-);
-
-// ===============================
-// DELETE LISTING
-// DELETE /listings/:id
-// ===============================
-router.delete(
-  "/:id",
-  isLoggedIn,
-  wrapAsync(deleteListing),
+  wrapAsync(listingController.renderEditForm)
 );
 
 module.exports = router;

@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router({ mergeParams: true });
 
 const wrapAsync = require("../utils/wrapAsync.js");
-const Listing = require("../models/listing.js");
-const Review = require("../models/review.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { reviewSchema } = require("../schema.js");
+
+const { isLoggedIn, isReviewAuthor } = require("../middleware.js");
+
+const reviewController = require("../controllers/review.js");
 
 // ===============================
 // Validation Middleware
@@ -26,29 +28,9 @@ const validateReview = (req, res, next) => {
 // ===============================
 router.post(
   "/",
+  isLoggedIn,
   validateReview,
-  wrapAsync(async (req, res, next) => {
-    const { id } = req.params;
-
-    const listing = await Listing.findById(id);
-
-    if (!listing) {
-      return next(new ExpressError(404, "Listing not found"));
-    }
-
-    const newReview = new Review(req.body.review);
-
-    await newReview.save();
-
-    listing.reviews.push(newReview._id);
-
-    await listing.save();
-
-    console.log("Review added successfully.");
-    req.flash("success", "Review added successfully!");
-
-    res.redirect(`/listings/${listing._id}`);
-  }),
+  wrapAsync(reviewController.createReview),
 );
 
 // ===============================
@@ -57,30 +39,9 @@ router.post(
 // ===============================
 router.delete(
   "/:reviewId",
-  wrapAsync(async (req, res, next) => {
-    const { id, reviewId } = req.params;
-
-    const listing = await Listing.findByIdAndUpdate(
-      id,
-      {
-        $pull: {
-          reviews: reviewId,
-        },
-      },
-      {
-        new: true,
-      },
-    );
-
-    if (!listing) {
-      return next(new ExpressError(404, "Listing not found"));
-    }
-
-    await Review.findByIdAndDelete(reviewId);
-    req.flash("success", "Review deleted successfully!");
-
-    res.redirect(`/listings/${id}`);
-  }),
+  isLoggedIn,
+  isReviewAuthor,
+  wrapAsync(reviewController.deleteReview),
 );
 
 module.exports = router;

@@ -53,6 +53,7 @@
 
     </div>
 
+    <% if(currentUser) {%>
     <div class="reviews-section">
       <h4>leave review :</h4>
       <form action="/listings/<%= onelist._id %>/reviews" method="POST">
@@ -72,6 +73,7 @@
         </div>
         <button type="submit" class="btn btn-dark mt-2">Submit</button>
       </form>
+      <% }%>
 
       <h4>All Reviews</h4>
       <div class="reviews-grid">
@@ -79,11 +81,13 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Rating: <%= review.rating %> Stars</h5>
+              <h5 class="card-title">Author: @<%= review.author.username %></h5>
               <p class="card-text">
                 <%= review.comment %>
               </p>
 
-              <form method="post" action="/listings/<%= onelist._id %>/reviews/<%= review._id %>?_method=DELETE">
+              <form method="post" action="/listings/<%= onelist._id %>/reviews/<%= review._id %>">
+                <input type="hidden" name="_method" value="DELETE">
                 <button type="submit" class="btn btn-outline-danger">Delete Review</button>
               </form>
 

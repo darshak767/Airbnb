@@ -16,7 +16,7 @@ module.exports.showListing = async (req, res) => {
   const { id } = req.params;
 
   const onelist = await Listing.findById(id)
-    .populate("reviews")
+    .populate({ path: "reviews", populate: { path: "author" } })
     .populate("owner");
 
   if (!onelist) {
@@ -110,4 +110,3 @@ module.exports.deleteListing = async (req, res) => {
 
   res.redirect("/listings");
 };
-  
