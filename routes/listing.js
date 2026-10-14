@@ -9,6 +9,10 @@ const { isLoggedIn, isowner } = require("../middleware.js");
 
 const listingController = require("../controllers/listings.js");
 
+const multer = require('multer')
+const { storage } = require("../cloudConfig.js")
+const upload = multer({ storage })
+
 // Validation Middleware
 const validateListing = (req, res, next) => {
   const { error } = listingSchema.validate(req.body.Listing);
@@ -26,6 +30,7 @@ router.route("/")
   )
   .post(
     isLoggedIn,
+    upload.single('Listing[image]'),
     validateListing,
     wrapAsync(listingController.createListing)
   );

@@ -30,16 +30,22 @@ module.exports.showListing = async (req, res) => {
   });
 };
 
-module.exports.creatListing = async (req, res) => {
+module.exports.createListing = async (req, res) => {
+  let url = req.file ? req.file.path : "/img/albert.jpg";
+  let filename = req.file ? req.file.filename : "listingimage";
+
+  console.log(url, filename);
+
   const listingData = req.body.Listing;
 
-  const { title, description, image, country, price, location } = listingData;
+  const { title, description, country, price, location } = listingData;
 
   const newList = new Listing({
     title,
     description,
     image: {
-      url: image && image.trim() !== "" ? image : "/img/albert.jpg",
+      url,
+      filename,
     },
     country,
     price,

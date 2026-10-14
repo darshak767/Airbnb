@@ -4,7 +4,8 @@
 
     <h1 class="mb-4">Add New Place</h1>
 
-    <form method="post" action="/listings" class="needs-validation" novalidate>
+    <!-- enctype multipart form data use for image upload -->
+    <form method="post" action="/listings" class="needs-validation" enctype="multipart/form-data" novalidate>
 
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
@@ -28,9 +29,9 @@
 
       <div class="mb-3">
         <label for="image" class="form-label">Image</label>
-        <input type="text" class="form-control" id="image" placeholder="Enter image URL..." name="Listing[image]">
+        <input type="file" class="form-control" id="image" placeholder="Enter image URL..." name="Listing[image]">
         <div class="invalid-feedback">
-          Please enter a valid image URL.
+          Please select a file.
         </div>
       </div>
 

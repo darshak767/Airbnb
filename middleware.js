@@ -3,7 +3,7 @@ const Review = require('./models/review')
 
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    console.log(req.path, "..", req.originalUrl);
+    // console.log(req.path, "..", req.originalUrl);
 
     if (req.method === "GET") {
       req.session.redirectUrl = req.originalUrl;

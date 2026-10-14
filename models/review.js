@@ -9,7 +9,7 @@ const reviewSchema = new Schema({
   rating: {
     type: Number,
     required: true,
-    min: [1, "Rating must be at least 1"],
+    min: [0, "Rating must be at least 0"],
     max: [5, "Rating cannot exceed 5"],
   },
   createdAt: {

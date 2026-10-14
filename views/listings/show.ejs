@@ -54,47 +54,62 @@
     </div>
 
     <% if(currentUser) {%>
-    <div class="reviews-section">
-      <h4>leave review :</h4>
-      <form action="/listings/<%= onelist._id %>/reviews" method="POST">
-        <div class="mb-3">
-          <output for="review-rating" id="review-rating-value">1 </output> Stars
-          <label for="review-rating" class="form-label">Rating</label>
+      <div class="reviews-section">
+        <h4>Leave a Review</h4>
+        <form action="/listings/<%= onelist._id %>/reviews" method="POST" novalidate class="needs-validation">
+          <div class="mb-3">
+            <fieldset class="starability-slot">
+              <legend>Rating :</legend>
+              <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked
+                aria-label="No rating." />
+              <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+              <label for="first-rate1" title="Terrible">1 star</label>
+              <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+              <label for="first-rate2" title="Not good">2 stars</label>
+              <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+              <label for="first-rate3" title="Average">3 stars</label>
+              <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+              <label for="first-rate4" title="Very good">4 stars</label>
+              <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+              <label for="first-rate5" title="Amazing">5 stars</label>
+            </fieldset>
 
-          <input type="range" min="1" max="5" value="1" name="review[rating]" id="review-rating" class="form-range">
-
-
-          <label for="review-comment" class="form-label">Comment :-</label>
-          <textarea name="review[comment]" id="review-comment" class="form-control"
-            placeholder="Enter your feedback..."></textarea>
-          <div class="invalid-feedback">
-            Please enter a valid feedback.
-          </div>
-        </div>
-        <button type="submit" class="btn btn-dark mt-2">Submit</button>
-      </form>
-      <% }%>
-
-      <h4>All Reviews</h4>
-      <div class="reviews-grid">
-        <% for(let review of onelist.reviews){ %>
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Rating: <%= review.rating %> Stars</h5>
-              <h5 class="card-title">Author: @<%= review.author.username %></h5>
-              <p class="card-text">
-                <%= review.comment %>
-              </p>
-
-              <form method="post" action="/listings/<%= onelist._id %>/reviews/<%= review._id %>">
-                <input type="hidden" name="_method" value="DELETE">
-                <button type="submit" class="btn btn-outline-danger">Delete Review</button>
-              </form>
-
+            <label for="review-comment" class="form-label mt-2">Comment :-</label>
+            <textarea name="review[comment]" id="review-comment" class="form-control"
+              placeholder="Enter your feedback..." required></textarea>
+            <div class="invalid-feedback">
+              Please enter a valid feedback.
             </div>
           </div>
-          <% } %>
+          <button type="submit" class="btn btn-dark mt-2">Submit</button>
+        </form>
+        <% }%>
+
+          <h4>All Reviews</h4>
+          <div class="reviews-grid">
+            <% for(let review of onelist.reviews){ %>
+              <div class="card">
+                <div class="card-body">
+                  <p class="starability-result" data-rating="<%= review.rating %>">
+                    Rated: <%= review.rating %> stars
+                  </p>
+                  <h5 class="card-title">Author: @<%= review.author.username %>
+                  </h5>
+                  <p class="card-text">
+                    <%= review.comment %>
+                  </p>
+
+                  <% if(currentUser && review.author && review.author._id.equals(currentUser._id)) { %>
+                  <form method="post" action="/listings/<%= onelist._id %>/reviews/<%= review._id %>">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-outline-danger">Delete Review</button>
+                  </form>
+                  <% } %>
+
+                </div>
+              </div>
+              <% } %>
+          </div>
       </div>
-    </div>
 
   </div>

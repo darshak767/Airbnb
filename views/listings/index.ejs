@@ -17,8 +17,9 @@
         <div class="col">
           <div class="card listing-card">
 
-            <img src="<%= list.image.url %>" class="card-img-top" alt="<%= list.title %>">
-
+            <!-- <img src="<%= list.image.url %>" class="card-img-top" alt="<%= list.title %>"> -->
+            <img src="<%= list.image.url  || '/img/default-image.jpg' %>" class="card-img-top"
+              alt="<%= list.title %>">
             <div class="card-body">
 
               <h5 class="card-title">
