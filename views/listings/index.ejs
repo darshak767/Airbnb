@@ -17,9 +17,8 @@
         <div class="col">
           <div class="card listing-card">
 
-            <!-- <img src="<%= list.image.url %>" class="card-img-top" alt="<%= list.title %>"> -->
-            <img src="<%= list.image.url  || '/img/default-image.jpg' %>" class="card-img-top"
-              alt="<%= list.title %>">
+            <img src="<%= (list.image && list.image.url) ? list.image.url : '/img/default-image.jpg' %>" class="card-img-top"
+              alt="<%= list.title %>" onerror="this.onerror=null;this.src='/img/default-image.jpg';">
             <div class="card-body">
 
               <h5 class="card-title">

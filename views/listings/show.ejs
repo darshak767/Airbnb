@@ -6,7 +6,7 @@
 
     <div class="show-card">
 
-      <img src="<%= onelist.image.url %>" class="show-image" alt="<%= onelist.title %>">
+      <img src="<%= (onelist.image && onelist.image.url) ? onelist.image.url : '/img/default-image.jpg' %>" class="show-image" alt="<%= onelist.title %>" onerror="this.onerror=null;this.src='/img/default-image.jpg';">
 
       <div class="show-details">
 

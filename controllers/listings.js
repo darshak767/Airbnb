@@ -34,8 +34,6 @@ module.exports.createListing = async (req, res) => {
   let url = req.file ? req.file.path : "/img/albert.jpg";
   let filename = req.file ? req.file.filename : "listingimage";
 
-  console.log(url, filename);
-
   const listingData = req.body.Listing;
 
   const { title, description, country, price, location } = listingData;
@@ -79,23 +77,28 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateListing = async (req, res) => {
   const { id } = req.params;
 
-  const listing = await Listing.findById(id);
+  const updatedData = { ...req.body.Listing };
+  delete updatedData.image; // Do not overwrite image schema with non-file values from body
+
+  const listing = await Listing.findByIdAndUpdate(id, updatedData, {
+    returnDocument: "after",
+    runValidators: true,
+  });
 
   if (!listing) {
     req.flash("error", "Listing not found");
     return res.redirect("/listings");
   }
 
-  const updatedData = req.body.Listing;
+  if (typeof req.file !== "undefined") {
+    let url = req.file.path;
+    let filename = req.file.filename;
 
-  const updatedListing = await Listing.findByIdAndUpdate(id, updatedData, {
-    new: true,
-    runValidators: true,
-  });
-
-  if (!updatedListing) {
-    req.flash("error", "Listing not found");
-    return res.redirect("/listings");
+    listing.image = {
+      url,
+      filename,
+    };
+    await listing.save();
   }
 
   req.flash("success", "Listing updated successfully!");

@@ -38,7 +38,7 @@ module.exports.deleteReview = async (req, res, next) => {
       },
     },
     {
-      new: true,
+      returnDocument: "after",
     },
   );
 

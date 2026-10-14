@@ -5,10 +5,10 @@
     <h1 class="mb-4">Edit <%= onelist.title %>
     </h1>
 
-    <form method="post" class="needs-validation" action="/listings/<%= onelist._id %>?_method=PUT" novalidate>
+    <form method="post" class="needs-validation" action="/listings/<%= onelist._id %>?_method=PUT" enctype="multipart/form-data" novalidate>
 
       <div class="edit-image mb-4">
-        <img src="<%= onelist.image.url %>" alt="<%= onelist.title %>">
+        <img src="<%= (onelist.image && onelist.image.url) ? onelist.image.url : '/img/default-image.jpg' %>" alt="<%= onelist.title %>" onerror="this.onerror=null;this.src='/img/default-image.jpg';">
       </div>
 
       <div class="mb-3">
@@ -19,12 +19,22 @@
         </div>
       </div>
 
+
+
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
         <textarea class="form-control" id="description" name="Listing[description]" rows="4"
           required><%= onelist.description %></textarea>
         <div class="invalid-feedback">
           Please enter a valid description.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="image" class="form-label">Upload Image</label>
+        <input type="file" class="form-control" id="image" name="Listing[image]" >
+        <div class="invalid-feedback">
+          Please enter a valid image.
         </div>
       </div>
 
@@ -54,7 +64,7 @@
         <label for="location" class="form-label">Location</label>
         <input type="text" class="form-control" id="location" value="<%= onelist.location %>" name="Listing[location]"
           required>
-          <div class="invalid-feedback">
+        <div class="invalid-feedback">
           Please enter a valid location.
         </div>
       </div>
