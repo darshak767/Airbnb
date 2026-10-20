@@ -470,13 +470,16 @@ module.exports = (fn) => {
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature suggestions are welcome!
+Contributions, issues, and feature suggestions are welcome! Please check out the [Contributing Guidelines](CONTRIBUTING.md) before submitting a Pull Request.
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m "Add some AmazingFeature"`)
+3. Commit your Changes (`git commit -m "feat(listings): add some amazing feature"`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
+
+For full details on local environment setup, database seeding, coding standards, and PR requirements, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 
 ---
 
