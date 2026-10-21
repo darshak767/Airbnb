@@ -11,13 +11,22 @@ async function main() {
   console.log("Database Connected successfully.");
 }
 
+const User = require("../models/user.js");
+
 //intalize database. first delete all data then initalize new data.
 const initDB = async () => {
   await Listing.deleteMany({});
-    initData.data = initData.data.map((obj) => ({
-        ...obj,
-        owner: "6ac8e4071a90e336d437d929",
-    }));
+
+  let defaultUser = await User.findById("6ac8e4071a90e336d437d929");
+  if (!defaultUser) {
+    defaultUser = await User.findOne({});
+  }
+  const ownerId = defaultUser ? defaultUser._id : "6ac8e4071a90e336d437d929";
+
+  initData.data = initData.data.map((obj) => ({
+    ...obj,
+    owner: ownerId,
+  }));
 
   await Listing.insertMany(initData.data);
   console.log("Data was initialized.");

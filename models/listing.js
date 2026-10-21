@@ -40,6 +40,17 @@ const listingSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Review"
   }], //array of reviewSchema
+  geometry: {
+    type: {
+      type: String,
+      enum: ["Point"],
+      default: "Point"
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
+  },
 });
 
 listingSchema.post("findOneAndDelete", async function (doc) {

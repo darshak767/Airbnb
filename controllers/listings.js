@@ -1,4 +1,7 @@
 const Listing = require("../models/listing");
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapboxToken = process.env.MAP_TOKEN || process.env.MAP_TOKAN;
+const geocodingClient = mapboxToken ? mbxGeocoding({ accessToken: mapboxToken }) : null;
 
 module.exports.index = async (req, res) => {
   const listsAll = await Listing.find({});
@@ -31,6 +34,15 @@ module.exports.showListing = async (req, res) => {
 };
 
 module.exports.createListing = async (req, res) => {
+  let respones;
+  if (geocodingClient) {
+    respones = await geocodingClient.forwardGeocode({
+      query: req.body.Listing.location,
+      limit: 1
+    })
+      .send();
+  }
+
   let url = req.file ? req.file.path : "/img/albert.jpg";
   let filename = req.file ? req.file.filename : "listingimage";
 
@@ -50,6 +62,12 @@ module.exports.createListing = async (req, res) => {
     location,
   });
   newList.owner = req.user._id;
+
+  if (respones && respones.body && respones.body.features && respones.body.features.length > 0) {
+    newList.geometry = respones.body.features[0].geometry;
+  } else {
+    newList.geometry = { type: "Point", coordinates: [77.209, 28.6139] };
+  }
 
   await newList.save();
 

@@ -1,5 +1,10 @@
 <% layout('layouts/boilerplate') -%>
 
+  <script>
+    const mapToken = "<%= process.env.MAP_TOKEN || process.env.MAP_TOKAN || mapToken || '' %>";
+    const listingData = `<%- JSON.stringify(onelist).replace(/</g, '\u003c') %>`;
+  </script>
+
   <div class="listing-form">
 
     <h1 class="mb-4">Listing Details</h1>
@@ -85,50 +90,49 @@
           <button type="submit" class="btn btn-dark mt-2">Submit</button>
         </form>
       </div>
-    <% }%>
+      <% }%>
 
-    <% if(onelist.reviews.length> 0) {%>
-      <div class="reviews-section">
-        <h4>All Reviews</h4>
-        <div class="reviews-grid">
-          <% for(let review of onelist.reviews){ %>
-            <div class="card">
-              <div class="card-body">
-                <p class="starability-result" data-rating="<%= review.rating %>">
-                  Rated: <%= review.rating %> stars
-                </p>
-                <h5 class="card-title">Author: @<%= review.author.username %>
-                </h5>
-                <p class="card-text">
-                  <%= review.comment %>
-                </p>
+        <% if(onelist.reviews.length> 0) { %>
+          <div class="reviews-section">
+            <h4>All Reviews</h4>
+            <div class="reviews-grid">
+              <% for(let review of onelist.reviews){ %>
+                <div class="card">
+                  <div class="card-body">
+                    <p class="starability-result" data-rating="<%= review.rating %>">
+                      Rated: <%= review.rating %> stars
+                    </p>
+                    <h5 class="card-title">Author: @<%= review.author.username %>
+                    </h5>
+                    <p class="card-text">
+                      <%= review.comment %>
+                    </p>
 
-                <% if(currentUser && review.author && review.author._id.equals(currentUser._id)) { %>
-                  <form method="post" action="/listings/<%= onelist._id %>/reviews/<%= review._id %>">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" class="btn btn-outline-danger">Delete Review</button>
-                  </form>
+                    <% if(currentUser && review.author && review.author._id.equals(currentUser._id)) { %>
+                      <form method="post" action="/listings/<%= onelist._id %>/reviews/<%= review._id %>">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-outline-danger">Delete Review</button>
+                      </form>
+                      <% } %>
+
+                  </div>
+                </div>
                 <% } %>
-
-              </div>
             </div>
+          </div>
           <% } %>
-        </div>
-      </div>
-    <% } %>
 
-    <div class="map-section mt-4 mb-4">
-      <h4>Where you'll be</h4>
-      <div id="map"></div>
-    </div>
-
+            <div class="map-section mt-4 mb-4">
+              <h4>Where you'll be</h4>
+              <div id="map"></div>
+            </div>
   </div>
 
-  <script id="listing-data" type="application/json">
+  <!-- <script id="listing-data" type="application/json">
     <%- JSON.stringify(onelist).replace(/</g, '\\u003c') %>
   </script>
   <script>
-    const mapToken = "<%= mapToken || process.env.MAP_TOKAN || process.env.MAP_TOKEN || '' %>";
+    const mapTokens = "<%= process.env.MAP_TOKAN || process.env.MAP_TOKEN || '' %>";
     const listing = JSON.parse(document.getElementById("listing-data").textContent);
-  </script>
+  </script> -->
   <script src="/js/map.js"></script>
